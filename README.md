@@ -34,8 +34,13 @@
    # 每一个 add 命令下方都给出了执行后再用 list 查看的结果，供大家详细了解具体的格式，如空格的数量和单引号是否存在等等
 
    ./gradlew run --args "init"
+   Initialized successfully.
 
    ./gradlew run --args "list"
+   # To be done
+   Empty
+   # Completed
+   Empty
 
    ./gradlew run --args "add foobar"
    # To be done
