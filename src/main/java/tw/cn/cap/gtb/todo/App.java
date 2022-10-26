@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,6 +43,16 @@ public class App {
     private static boolean preCheck() {
         return Files.notExists(Path.of(TASKS_FILE));
     }
+
+    private String[] getParas(String[] args) {
+        return Arrays.stream(args).skip(1).toArray(String[]::new);
+    }
+
+    private String getTaskName(String[] args) {
+        String[] paras = getParas(args);
+        return String.join(" ", paras);
+    }
+
 
     private void readFile() {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(TASKS_FILE))) {
@@ -83,9 +94,9 @@ public class App {
         Map<Boolean, List<Task>> collect =
                 tasks.stream().collect(Collectors.groupingBy(Task::getDone));
         System.out.println("# To be done");
-        listByStatus(collect,false);
+        listByStatus(collect, false);
         System.out.println("# Completed");
-        listByStatus(collect,true);
+        listByStatus(collect, true);
     }
 
     private void listByStatus(Map<Boolean, List<Task>> collect, Boolean flag) {
@@ -97,7 +108,6 @@ public class App {
             System.out.println("Empty");
         }
     }
-
 
 
 }
