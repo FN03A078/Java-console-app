@@ -17,7 +17,7 @@ public class App {
     private static final String TASKS_FILE = TODO_PATH + File.separator + "tasks";
     private static final String INIT_MSG = "Initialized successfully.";
     private static final String INIT_ERR_MSG = "Please run 'todo init' before running '%s' command.";
-    private static final String PARAS_ERR = "";
+    //private static final String PARAS_ERR = "";
     private static List<Task> tasks;
     private static String nextId;
 
@@ -134,32 +134,33 @@ public class App {
 
     private void mark(String[] markIds) {
         if (markIds.length != 0 && !tasks.isEmpty()) {
-            try {
                 for (String markId : markIds) {
                     for (Task task : tasks) {
-                        if (task.getId() == Integer.parseInt(markId)) {
-                            task.setDone(true);
+                        try {
+                            if (task.getId() == Integer.parseInt(markId)) {
+                                task.setDone(true);
+                            }
+                        } catch (NumberFormatException e) {
+                            //System.out.print(PARAS_ERR);
                         }
                     }
                 }
                 writeFile();
-            } catch (NumberFormatException e) {
-                System.out.println(PARAS_ERR);
-            }
+
         }
     }
 
 
     private void remove(String[] removeIds) {
         if (removeIds.length != 0 && !tasks.isEmpty()) {
-            try {
                 for (String removeId : removeIds) {
-                    tasks.removeIf(task -> task.getId() == Integer.parseInt(removeId));
+                    try {
+                        tasks.removeIf(task -> task.getId() == Integer.parseInt(removeId));
+                    } catch (NumberFormatException e) {
+                        //System.out.print(PARAS_ERR);
+                    }
                 }
                 writeFile();
-            } catch (NumberFormatException e) {
-                System.out.println(PARAS_ERR);
-            }
         }
     }
 
