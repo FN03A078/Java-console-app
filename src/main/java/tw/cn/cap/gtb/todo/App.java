@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class App {
@@ -26,7 +28,10 @@ public class App {
             if ("init".equals(args[0])) {
                 app.init();
             } else if (!preCheck()) {
-                //list
+                app.readFile();
+                switch (args[0]) {
+                    case "list" -> app.list();
+                }
             } else {
                 System.out.printf(INIT_ERR_MSG, args[0]);
             }
@@ -72,5 +77,23 @@ public class App {
         }
     }
 
+    private void list() {
+        Map<Boolean, List<Task>> collect =
+                tasks.stream().collect(Collectors.groupingBy(Task::getDone));
+        System.out.println("# To be done");
+        listByStatus(collect,false);
+        System.out.println("# Completed");
+        listByStatus(collect,true);
+    }
+
+    private void listByStatus(Map<Boolean, List<Task>> collect, Boolean flag) {
+        if (collect.get(flag) != null) {
+            for (Task task : collect.get(flag)) {
+                System.out.println(task);
+            }
+        } else {
+            System.out.println("Empty");
+        }
+    }
 
 }
