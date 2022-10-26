@@ -31,6 +31,7 @@ public class App {
                 switch (args[0]) {
                     case "list" -> app.list();
                     case "add" -> app.add(app.getTaskName(args));
+                    case "mark" -> app.mark(app.getParas(args));
                 }
             } else {
                 System.out.printf(INIT_ERR_MSG, args[0]);
@@ -125,6 +126,20 @@ public class App {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    private void mark(String[] markIds) {
+        if (markIds.length != 0 && !tasks.isEmpty()) {
+            for (String markId : markIds) {
+                for (Task task : tasks) {
+                    if (task.getId() == Integer.parseInt(markId)) {
+                        task.setDone(true);
+                    }
+                }
+            }
+            writeFile();
         }
     }
 
