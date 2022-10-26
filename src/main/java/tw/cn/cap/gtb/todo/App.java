@@ -20,6 +20,7 @@ public class App {
     private static final String INIT_MSG = "Initialized successfully.";
     private static final String INIT_ERR_MSG = "Please run 'todo init' before running '%s' command.";
     private static List<Task> tasks;
+    private static String nextId;
 
 
     public static void main(String[] args) {
@@ -44,6 +45,7 @@ public class App {
 
     private void readFile() {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(TASKS_FILE))) {
+            nextId = bufferedReader.readLine();
             tasks = new ArrayList<>();
             String record;
             while ((record = bufferedReader.readLine()) != null) {
@@ -95,5 +97,7 @@ public class App {
             System.out.println("Empty");
         }
     }
+
+
 
 }
