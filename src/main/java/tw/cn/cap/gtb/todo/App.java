@@ -32,6 +32,7 @@ public class App {
                     case "list" -> app.list();
                     case "add" -> app.add(app.getTaskName(args));
                     case "mark" -> app.mark(app.getParas(args));
+                    case "remove" -> app.remove(app.getParas(args));
                 }
             } else {
                 System.out.printf(INIT_ERR_MSG, args[0]);
@@ -111,7 +112,7 @@ public class App {
     private void add(String taskName) {
         int taskId = nextId == null ? 1 : Integer.parseInt(nextId);
         nextId = String.valueOf(taskId + 1);
-        tasks.add(new Task(false,taskId,taskName));
+        tasks.add(new Task(false, taskId, taskName));
         writeFile();
     }
 
@@ -138,6 +139,16 @@ public class App {
                         task.setDone(true);
                     }
                 }
+            }
+            writeFile();
+        }
+    }
+
+
+    private void remove(String[] removeIds) {
+        if (removeIds.length != 0 && !tasks.isEmpty()) {
+            for (String removeId : removeIds) {
+                tasks.removeIf(task -> task.getId() == Integer.parseInt(removeId));
             }
             writeFile();
         }
