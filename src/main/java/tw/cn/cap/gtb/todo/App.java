@@ -1,10 +1,7 @@
 package tw.cn.cap.gtb.todo;
 
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -33,6 +30,7 @@ public class App {
                 app.readFile();
                 switch (args[0]) {
                     case "list" -> app.list();
+                    case "add" -> app.add(app.getTaskName(args));
                 }
             } else {
                 System.out.printf(INIT_ERR_MSG, args[0]);
@@ -109,5 +107,25 @@ public class App {
         }
     }
 
+    private void add(String taskName) {
+        int taskId = nextId == null ? 1 : Integer.parseInt(nextId);
+        nextId = String.valueOf(taskId + 1);
+        tasks.add(new Task(false,taskId,taskName));
+        writeFile();
+    }
+
+    private void writeFile() {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(TASKS_FILE))) {
+            bufferedWriter.write(nextId);
+            bufferedWriter.newLine();
+            for (Task task : tasks) {
+                String str = task.getDone() + " " + task.getId() + " " + task.getTaskName();
+                bufferedWriter.write(str);
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
