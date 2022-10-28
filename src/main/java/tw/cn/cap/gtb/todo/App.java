@@ -16,7 +16,7 @@ public class App {
     private static final String TODO_PATH = System.getProperty("user.home") + File.separator + ".todo";
     private static final String TASKS_FILE = TODO_PATH + File.separator + "tasks";
     private static final String INIT_MSG = "Initialized successfully.";
-    private static final String INIT_ERR_MSG = "Please run 'todo init' before running '%s' command.";
+    private static final String INIT_ERR_MSG = "Please run 'todo init' before running '%s' command.\n";
 
     //private static final String PARAS_ERR = "";
 
