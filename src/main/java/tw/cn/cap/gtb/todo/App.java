@@ -106,7 +106,7 @@ public class App {
      * @param record Each line read from the file
      */
     private void storeList(String record) {
-        String[] split = record.split("\\s+", 3);
+        String[] split = record.split(" ",3);
         tasks.add(new Task(
                 Boolean.parseBoolean(split[0]),
                 Integer.parseInt(split[1]),
