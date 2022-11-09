@@ -17,7 +17,6 @@ public class App {
     private static final String TASKS_FILE = TODO_PATH + File.separator + "tasks";
     private static final String INIT_MSG = "Initialized successfully.";
     private static final String INIT_ERR_MSG = "Please run 'todo init' before running '%s' command.\n";
-
     //private static final String PARAS_ERR = "";
 
     //collection used to store records from local file
@@ -145,6 +144,7 @@ public class App {
 
 
     // command method below
+
 
     /**
      * create "tasks" file then
