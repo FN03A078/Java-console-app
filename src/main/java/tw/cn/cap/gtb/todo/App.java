@@ -17,7 +17,6 @@ public class App {
     private static final String TASKS_FILE = TODO_PATH + File.separator + "tasks";
     private static final String INIT_MSG = "Initialized successfully.";
     private static final String INIT_ERR_MSG = "Please run 'todo init' before running '%s' command.\n";
-    //private static final String PARAS_ERR = "";
 
     //collection used to store records from local file
     private static List<Task> tasks;
@@ -105,7 +104,7 @@ public class App {
      * @param record Each line read from the file
      */
     private void storeList(String record) {
-        String[] split = record.split(" ",3);
+        String[] split = record.split(" ", 3);
         tasks.add(new Task(
                 Boolean.parseBoolean(split[0]),
                 Integer.parseInt(split[1]),
@@ -200,18 +199,14 @@ public class App {
     private void mark(String[] markIds) {
         if (markIds.length != 0 && !tasks.isEmpty()) {
             for (String markId : markIds) {
+                if (!markId.chars().allMatch(Character::isDigit)) continue;
                 for (Task task : tasks) {
-                    try {
-                        if (task.getId() == Integer.parseInt(markId)) {
-                            task.setDone(true);
-                        }
-                    } catch (NumberFormatException e) {
-                        //System.out.print(PARAS_ERR);
+                    if (task.getId() == Integer.parseInt(markId)) {
+                        task.setDone(true);
                     }
                 }
             }
             writeFile();
-
         }
     }
 
@@ -225,11 +220,8 @@ public class App {
     private void remove(String[] removeIds) {
         if (removeIds.length != 0 && !tasks.isEmpty()) {
             for (String removeId : removeIds) {
-                try {
-                    tasks.removeIf(task -> task.getId() == Integer.parseInt(removeId));
-                } catch (NumberFormatException e) {
-                    //System.out.print(PARAS_ERR);
-                }
+                if (!removeId.chars().allMatch(Character::isDigit)) continue;
+                tasks.removeIf(task -> task.getId() == Integer.parseInt(removeId));
             }
             writeFile();
         }
